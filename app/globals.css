@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.button_border_style {
+  @apply border-red-600
+}
+
+.heading {
+@apply text-3xl font-extrabold
+}
+
+
+
+@keyframes spinColor {
+  0% {
+    background-color: #f56565; /* red */
+  }
+  50% {
+    background-color: #4299e1; /* blue */
+  }
+  100% {
+    background-color: #48bb78; /* green */
+  }
+}
+
+.loader_spin {
+  animation: spinColor 1.5s linear infinite, spin 1s linear infinite;
+}
