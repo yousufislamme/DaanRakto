@@ -18,7 +18,7 @@ const Hero = () => {
         className={`${rubik.className} mt-20 text-center text-[50px] font-semibold`}
       >
         Welcome to
-        <span className="hi text-red-600"> DaanRakto</span>
+        <span className="hi text-red-600"> DaanRakto </span>
        <DotAnimation />
       </h1>
       </div>
