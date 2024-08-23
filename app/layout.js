@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider"
+import { MyContextProvider } from "@/Context/Context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,18 +16,21 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <div className="min-h-[300px]">
-            {children}
-          </div>
-          <Footer />
-        </ThemeProvider>
+        <MyContextProvider>
+
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <div className="min-h-[300px]">
+              {children}
+            </div>
+            <Footer />
+          </ThemeProvider>
+        </MyContextProvider>
       </body>
     </html>
   );

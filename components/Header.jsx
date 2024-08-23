@@ -21,11 +21,9 @@ const Header = () => {
     <header className="bg-slate-100 dark:bg-slate-900 py-3 border-b-[0.5px] border-white">
       <div className="flex justify-between items-center px-10">
         <div>
-          <div
-            onClick={() => router.push("/")}
-            className={`${rubik.className} cursor-pointer text-lg font-semibold`}
+          <div className={`${rubik.className} cursor-pointer text-lg font-semibold`}
           >
-            DaanRakto
+            <Link href="/">DaanRakto</Link>
           </div>
         </div>
         <div className="flex gap-5 items-center">
@@ -35,7 +33,7 @@ const Header = () => {
             <span className="sr-only">Toggle theme</span>
           </Button>
 
-          <Link href="/blood">Blood</Link>
+          <Link href="/donate">Blood</Link>
           <Link href="/processing">Processing</Link>
         </div>
       </div>
