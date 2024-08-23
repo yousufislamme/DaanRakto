@@ -68,9 +68,13 @@
   }
 }
 
-.heading {
-  @apply text-2xl font-extrabold
+.titleStyle {
+  @apply text-[50px];
 }
+.subHeading {
+  @apply mb-5 border-l-4 border-red-500 pl-2 text-xl;
+}
+
 @keyframes spinColor {
   0% {
     background-color: #f56565; /* red */
@@ -83,5 +87,7 @@
   }
 }
 .loader_spin {
-  animation: spinColor 1.5s linear infinite, spin 1s linear infinite;
+  animation:
+    spinColor 1.5s linear infinite,
+    spin 1s linear infinite;
 }
