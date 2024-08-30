@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/theme-provider"
 import { MyContextProvider } from "@/Context/Context";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
             <Header />
             <div className="min-h-[300px]">
               {children}
+              <Toaster />
             </div>
             <Footer />
           </ThemeProvider>
