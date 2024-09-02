@@ -12,38 +12,71 @@ import {
 } from "@/components/ui/select";
 import { useMyContext } from "@/Context/Context";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+// Reusable Input Component
+const ReusableInput = ({
+  label,
+  placeholder,
+  type = "text",
+  value,
+  onChange,
+}) => (
+  <div className="mt-2">
+    <label>{label}</label> <br />
+    <Input
+      placeholder={placeholder}
+      type={type}
+      value={value || ""}
+      onChange={onChange}
+      className="w-auto"
+    />
+  </div>
+);
 
 const Donate = () => {
-  const divisions = "https://bdapis.com/api/v1.0/divisions";
-  const { donationData, setDonationData } = useMyContext();
-  const [divisionDataState, setDivisionDataState] = useState([]);
+  const { donationData, setDonationData, customState, setCustomState } =
+    useMyContext();
   const [dhakaAreas, setDhakaState] = useState([]);
 
   useEffect(() => {
-    fetch(divisions)
-      .then((response) => response.json())
-      .then((divisionData) => {
-        setDivisionDataState(divisionData.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching divisions:", error);
-      });
-  }, []);
-
-  useEffect(() => {
     setDhakaState(dhakaArea);
-  }, []);
+    setDonationData((prevData) => ({ ...prevData, division: "Dhaka" }));
+  }, [setDonationData]);
 
-  const handlePhoneNumberChange = (e) => {
+  const handleInputChange = (field) => (e) => {
     const value = e.target.value;
-    if (value.startsWith("+880")) {
-      setDonationData({ ...donationData, phoneNumber: value });
-    }
+    setDonationData((prevData) => ({ ...prevData, [field]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log("context value", donationData);
     setCustomState(donationData);
+
+    try {
+      const response = await fetch("http://localhost:5000/donate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donationData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      if (data.acknowledged) {
+        toast("successful");
+      } else {
+        alert("Failed to submit donation information.");
+      }
+
+      console.log("Response data:", data);
+    } catch (error) {
+      console.log("Error posting donation info || ", error);
+    }
   };
 
   return (
@@ -61,19 +94,18 @@ const Donate = () => {
           )}{" "}
           blood
         </h3>
-        <label htmlFor="name">Full Name</label> <br />
-        <Input
+
+        <ReusableInput
+          label="Full Name"
           placeholder="Full Name"
-          className="w-auto"
-          value={donationData.name || ""}
-          onChange={(e) =>
-            setDonationData({ ...donationData, name: e.target.value })
-          }
+          value={donationData.name}
+          onChange={handleInputChange("name")}
         />
+
         <div className="mt-2">
           <Select
             onValueChange={(value) =>
-              setDonationData({ ...donationData, bloodType: value })
+              setDonationData((prevData) => ({ ...prevData, bloodType: value }))
             }
           >
             <SelectTrigger className="w-[180px]">
@@ -88,34 +120,15 @@ const Donate = () => {
             </SelectContent>
           </Select>
         </div>
-        <div className="mt-4">
-          {donationData.bloodType && (
-            <Select
-              onValueChange={(value) =>
-                setDonationData({ ...donationData, division: value })
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select Division" />
-              </SelectTrigger>
-              <SelectContent>
-                {divisionDataState.map((divisionItem) => (
-                  <SelectItem
-                    key={divisionItem._id}
-                    value={divisionItem.division}
-                  >
-                    {divisionItem.division} ({divisionItem.divisionbn})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-        </div>
-        {donationData.division === "Dhaka" && (
+
+        {donationData.bloodType && (
           <div className="mt-4">
             <Select
               onValueChange={(value) =>
-                setDonationData({ ...donationData, dhakaArea: value })
+                setDonationData((prevData) => ({
+                  ...prevData,
+                  dhakaArea: value,
+                }))
               }
             >
               <SelectTrigger className="w-[180px]">
@@ -135,16 +148,28 @@ const Donate = () => {
           </div>
         )}
       </div>
-      <div className="mt-4">
-        <Input
-          value={donationData.phoneNumber || ""}
-          onChange={handlePhoneNumberChange}
-          placeholder="Phone Number"
-          className="w-auto"
-          type="tel"
-          maxLength={14}
-        />
-      </div>
+
+      {/* Reusable Input Components */}
+      <ReusableInput
+        label="Phone Number"
+        placeholder="Phone Number"
+        type="tel"
+        value={donationData.phoneNumber}
+        onChange={handleInputChange("phoneNumber")}
+      />
+      <ReusableInput
+        label="Hospital Name"
+        placeholder="Hospital Name"
+        value={donationData.hospitalName}
+        onChange={handleInputChange("hospitalName")}
+      />
+      <ReusableInput
+        label="Hospital Location"
+        placeholder="Hospital Location"
+        value={donationData.hospitalLocation}
+        onChange={handleInputChange("hospitalLocation")}
+      />
+
       <div className="mt-4">
         <button
           onClick={handleSubmit}
