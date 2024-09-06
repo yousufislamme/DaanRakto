@@ -39,4 +39,5 @@ export const dhakaArea = [
    { division_id: 38, name: "Eskaton" },
    { division_id: 39, name: "Mogbazar" },
    { division_id: 40, name: "Bangshal" },
+   { division_id: 41, name: "Other" }
 ];
