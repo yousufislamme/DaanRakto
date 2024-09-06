@@ -6,17 +6,17 @@ import BloodCard from "./BloodCard";
 const ShowBloodLists = () => {
   const [bloodInfos, setBloodInfos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [bloodTypeCounts, setBloodTypeCounts] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:5000/donate");
+        const res = await fetch("https://daan-rakto-server.vercel.app/donate");
         const data = await res.json();
-        console.log(data);
         setBloodInfos(data);
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching data from API", error);
+      } finally {
         setLoading(false);
       }
     };

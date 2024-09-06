@@ -18,15 +18,16 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-slate-100 dark:bg-slate-900 py-3 border-b-[0.5px] border-white">
-      <div className="flex justify-between items-center px-10">
+    <header className="border-b-[0.5px] border-white bg-slate-100 py-3 dark:bg-slate-900">
+      <div className="flex items-center justify-between px-10">
         <div>
-          <div className={`${rubik.className} cursor-pointer text-lg font-semibold`}
+          <div
+            className={`${rubik.className} cursor-pointer text-lg font-semibold`}
           >
             <Link href="/">DaanRakto</Link>
           </div>
         </div>
-        <div className="flex gap-5 items-center">
+        <div className="flex items-center gap-5">
           <Button variant="outline" size="icon" onClick={toggleTheme}>
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
@@ -34,7 +35,8 @@ const Header = () => {
           </Button>
 
           <Link href="/donate">Blood</Link>
-          <Link href="/processing">Processing</Link>
+          <Link href="/map">Map</Link>
+          <Link href="/track">Track</Link>
         </div>
       </div>
     </header>

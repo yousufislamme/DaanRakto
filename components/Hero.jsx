@@ -2,20 +2,43 @@
 import { cn } from "@/lib/utils";
 import { Rubik } from "next/font/google";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import BloodShowCase from "./BloodShowCase/BloodShowCase";
 import Button from "./Button";
 import DotAnimation from "./DotAnimation";
-import Popup from "./Popup";
+import { GlobeDemo } from "./ui/GlobeDemo";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
 export function Hero() {
   const router = useRouter();
+  const [bloodTypeCounts, setBloodTypeCounts] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch("https://daan-rakto-server.vercel.app/donate");
+        const data = await res.json();
+
+        // Count blood types
+        const counts = data.reduce((acc, item) => {
+          acc[item.bloodType] = (acc[item.bloodType] || 0) + 1;
+          return acc;
+        }, {});
+        setBloodTypeCounts(counts);
+      } catch (error) {
+        console.error("Error fetching data from API", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="relative flex w-full flex-col items-center bg-white py-32 bg-grid-black/[0.2] dark:bg-black dark:bg-grid-white/[0.2]">
       {/* Radial gradient for the container to give a faded look */}
       <div className="pointer-events-none items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
-
+      <GlobeDemo />
       {/* Main Content */}
       <h1
         className={cn(
@@ -42,7 +65,11 @@ export function Hero() {
           buttonTitle="Blood Need"
         />
       </div>
-      <Popup />
+
+      {/* BloodShowCase Component */}
+      {Object.keys(bloodTypeCounts).length > 0 && (
+        <BloodShowCase bloodTypeCounts={bloodTypeCounts} />
+      )}
     </div>
   );
 }
