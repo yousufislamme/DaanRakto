@@ -36,6 +36,7 @@ const Header = () => {
 
           <Link href="/donate">Blood</Link>
           <Link href="/map">Map</Link>
+          <Link href="/track">Track</Link>
         </div>
       </div>
     </header>
