@@ -1,5 +1,5 @@
 import Hero from "@/components/Hero";
-import ShowBloodLists from "@/components/ShowBloodLists";
+import ShowBloodLists from "./blood-post/page";
 
 
 export default function Home() {
