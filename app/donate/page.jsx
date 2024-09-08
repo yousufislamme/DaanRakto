@@ -38,10 +38,26 @@ const Donate = () => {
   const { donationData, setDonationData, customState, setCustomState } =
     useMyContext();
   const [dhakaAreas, setDhakaState] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState(null); // State for user's location
 
   useEffect(() => {
     setDhakaState(dhakaArea);
     setDonationData((prevData) => ({ ...prevData, division: "Dhaka" }));
+
+    // Get current geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCurrentLocation({ lat: latitude, lng: longitude });
+          setDonationData((prevData) => ({
+            ...prevData,
+            geolocation: { lat: latitude, lng: longitude },
+          }));
+        },
+        (error) => console.error("Error getting geolocation: ", error),
+      );
+    }
   }, [setDonationData]);
 
   const handleInputChange = (field) => (e) => {
@@ -71,7 +87,7 @@ const Donate = () => {
 
       const data = await response.json();
       if (data.acknowledged) {
-        toast("successful");
+        toast("Donation request submitted successfully!");
       } else {
         alert("Failed to submit donation information.");
       }
@@ -172,6 +188,16 @@ const Donate = () => {
         value={donationData.hospitalLocation}
         onChange={handleInputChange("hospitalLocation")}
       />
+
+      {/* Geolocation information (hidden from UI, but sent to server) */}
+      {currentLocation && (
+        <div className="mt-4 text-sm text-gray-500">
+          <p>
+            Current Location: Lat: {currentLocation.lat}, Lng:{" "}
+            {currentLocation.lng}
+          </p>
+        </div>
+      )}
 
       <div className="mt-4">
         <button

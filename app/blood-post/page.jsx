@@ -1,12 +1,12 @@
 "use client";
 
+import BloodCard from "@/components/BloodCard";
+import Link from "next/link"; // Import Link from Next.js
 import { useEffect, useState } from "react";
-import BloodCard from "./BloodCard";
 
 const ShowBloodLists = () => {
   const [bloodInfos, setBloodInfos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [bloodTypeCounts, setBloodTypeCounts] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,17 +44,20 @@ const ShowBloodLists = () => {
           hospitalLocation,
           hospitalName,
         } = singleBloodDetails;
+
         return (
-          <BloodCard
-            key={_id}
-            userName={name}
-            userNeedBloodType={bloodType}
-            userAddress={dhakaArea}
-            userDivision={division}
-            userNumber={phoneNumber}
-            hospitalName={hospitalName}
-            hospitalLocation={hospitalLocation}
-          />
+          // Wrap BloodCard with a clickable link to the single post page
+          <Link href={`/blood-post/${_id}`} key={_id}>
+            <BloodCard
+              userName={name}
+              userNeedBloodType={bloodType}
+              userAddress={dhakaArea}
+              userDivision={division}
+              userNumber={phoneNumber}
+              hospitalName={hospitalName}
+              hospitalLocation={hospitalLocation}
+            />
+          </Link>
         );
       })}
     </div>
