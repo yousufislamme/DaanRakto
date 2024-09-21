@@ -5,8 +5,6 @@ const BloodCard = ({
   userName,
   userNumber,
   userNeedBloodType,
-  userDivision,
-  userAddress,
   hospitalName,
   hospitalLocation,
 }) => {
@@ -34,17 +32,15 @@ const BloodCard = ({
       </div>
       <div>
         <p>
-          Phone Number: {userNumber}{" "}
+          Phone Number: {userNumber}
           <button onClick={handleCopy} className="ml-2 text-blue-500">
             {copySuccess || "Copy"}
           </button>
         </p>
       </div>
       <div>
-        <p>Division: {userDivision}</p>
-        <p>Address: {userAddress}</p>
+        <p>Hospital Address: {hospitalLocation}</p>
         <p>Hospital Name: {hospitalName}</p>
-        <p>Hospital Location: {hospitalLocation}</p>
       </div>
     </div>
   );
