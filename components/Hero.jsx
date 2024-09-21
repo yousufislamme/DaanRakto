@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import BloodShowCase from "./BloodShowCase/BloodShowCase";
 import Button from "./Button";
 import DotAnimation from "./DotAnimation";
-import { GlobeDemo } from "./ui/GlobeDemo";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -38,7 +37,6 @@ export function Hero() {
     <div className="relative flex w-full flex-col items-center bg-white py-32 bg-grid-black/[0.2] dark:bg-black dark:bg-grid-white/[0.2]">
       {/* Radial gradient for the container to give a faded look */}
       <div className="pointer-events-none items-center justify-center bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black"></div>
-      <GlobeDemo />
       {/* Main Content */}
       <h1
         className={cn(

@@ -1,6 +1,8 @@
 "use client";
 
 import BloodCard from "@/components/BloodCard";
+import { myServerUrl } from "@/components/bloodTypes";
+import Loading from "@/components/Loading";
 import Link from "next/link"; // Import Link from Next.js
 import { useEffect, useState } from "react";
 
@@ -11,7 +13,7 @@ const ShowBloodLists = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("https://daan-rakto-server.vercel.app/donate");
+        const res = await fetch(myServerUrl);
         const data = await res.json();
         setBloodInfos(data);
       } catch (error) {
@@ -25,7 +27,7 @@ const ShowBloodLists = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
@@ -37,25 +39,22 @@ const ShowBloodLists = () => {
         const {
           name,
           bloodType,
-          phoneNumber,
+          number,
+          age,
           _id,
-          division,
-          dhakaArea,
-          hospitalLocation,
+          hospitalAddress,
           hospitalName,
         } = singleBloodDetails;
 
         return (
           // Wrap BloodCard with a clickable link to the single post page
-          <Link href={`/blood-post/${_id}`} key={_id}>
+          <Link href={`/blood/${_id}`}>
             <BloodCard
               userName={name}
               userNeedBloodType={bloodType}
-              userAddress={dhakaArea}
-              userDivision={division}
-              userNumber={phoneNumber}
+              userNumber={number}
               hospitalName={hospitalName}
-              hospitalLocation={hospitalLocation}
+              hospitalLocation={hospitalAddress}
             />
           </Link>
         );

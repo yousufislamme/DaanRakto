@@ -25,6 +25,9 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        'mapBackground': "url('/img/mapBackground.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

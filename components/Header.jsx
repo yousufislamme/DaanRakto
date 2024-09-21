@@ -34,9 +34,9 @@ const Header = () => {
             <span className="sr-only">Toggle theme</span>
           </Button>
 
-          <Link href="/donate">Blood</Link>
-          <Link href="/map">Map</Link>
-          <Link href="/track">Track</Link>
+          <Link href="/donate">Donate</Link>
+          <Link href="/blood-request">Blood Request</Link>
+          <Link href="/blog">Blog</Link>
         </div>
       </div>
     </header>

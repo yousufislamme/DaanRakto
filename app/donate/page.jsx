@@ -13,7 +13,6 @@ import {
 import { useMyContext } from "@/Context/Context";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-
 // Reusable Input Component
 const ReusableInput = ({
   label,
@@ -103,14 +102,15 @@ const Donate = () => {
       <h1 className="text-2xl">
         Blood Donate <DotAnimation />
       </h1>
+
       <div className="mt-10">
         <h3 className="subHeading">
-          I need{" "}
+          I need
           {donationData.bloodType && (
             <span className="rounded-lg bg-red-500 px-1 text-white">
               {donationData.bloodType}
             </span>
-          )}{" "}
+          )}
           blood
         </h3>
 
@@ -166,46 +166,46 @@ const Donate = () => {
             </Select>
           </div>
         )}
-      </div>
 
-      {/* Reusable Input Components */}
-      <ReusableInput
-        label="Phone Number"
-        placeholder="Phone Number"
-        type="tel"
-        value={donationData.phoneNumber}
-        onChange={handleInputChange("phoneNumber")}
-      />
-      <ReusableInput
-        label="Hospital Name"
-        placeholder="Hospital Name"
-        value={donationData.hospitalName}
-        onChange={handleInputChange("hospitalName")}
-      />
-      <ReusableInput
-        label="Hospital Location"
-        placeholder="Hospital Location"
-        value={donationData.hospitalLocation}
-        onChange={handleInputChange("hospitalLocation")}
-      />
+        {/* Reusable Input Components */}
+        <ReusableInput
+          label="Phone Number"
+          placeholder="Phone Number"
+          type="tel"
+          value={donationData.phoneNumber}
+          onChange={handleInputChange("phoneNumber")}
+        />
+        <ReusableInput
+          label="Hospital Name"
+          placeholder="Hospital Name"
+          value={donationData.hospitalName}
+          onChange={handleInputChange("hospitalName")}
+        />
+        <ReusableInput
+          label="Hospital Location"
+          placeholder="Hospital Location"
+          value={donationData.hospitalLocation}
+          onChange={handleInputChange("hospitalLocation")}
+        />
 
-      {/* Geolocation information (hidden from UI, but sent to server) */}
-      {currentLocation && (
-        <div className="mt-4 text-sm text-gray-500">
-          <p>
-            Current Location: Lat: {currentLocation.lat}, Lng:{" "}
-            {currentLocation.lng}
-          </p>
+        {/* Geolocation information (hidden from UI, but sent to server) */}
+        {currentLocation && (
+          <div className="mt-4 text-sm text-gray-500">
+            <p>
+              Current Location: Lat: {currentLocation.lat}, Lng:{" "}
+              {currentLocation.lng}
+            </p>
+          </div>
+        )}
+
+        <div className="mt-4">
+          <button
+            onClick={handleSubmit}
+            className="rounded bg-blue-500 px-4 py-2 text-white"
+          >
+            Submit
+          </button>
         </div>
-      )}
-
-      <div className="mt-4">
-        <button
-          onClick={handleSubmit}
-          className="rounded bg-blue-500 px-4 py-2 text-white"
-        >
-          Submit
-        </button>
       </div>
     </div>
   );
