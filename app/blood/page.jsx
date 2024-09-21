@@ -50,6 +50,7 @@ const ShowBloodLists = () => {
           // Wrap BloodCard with a clickable link to the single post page
           <Link href={`/blood/${_id}`}>
             <BloodCard
+              key={_id}
               userName={name}
               userNeedBloodType={bloodType}
               userNumber={number}
