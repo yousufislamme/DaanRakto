@@ -1,10 +1,7 @@
 "use client";
 import Loading from "@/components/Loading";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-const router = useRouter();
-const { slug } = router.query;
 
 const SingleNewPage = ({ params }) => {
   const [singlePost, setSinglePost] = useState(null);
