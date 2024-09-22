@@ -47,7 +47,6 @@ const ShowBloodLists = () => {
         } = singleBloodDetails;
 
         return (
-          // Wrap BloodCard with a clickable link to the single post page
           <Link key={_id} href={`/blood/${_id}`}>
             <BloodCard
               key={_id}
