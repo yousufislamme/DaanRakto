@@ -15,7 +15,12 @@ const ShowBloodLists = () => {
       try {
         const res = await fetch(myServerUrl);
         const data = await res.json();
-        setBloodInfos(data);
+        console.log("API response:", data); // Log API response
+        if (Array.isArray(data)) {
+          setBloodInfos(data); // Only set if it's an array
+        } else {
+          console.error("Unexpected API response format:", data);
+        }
       } catch (error) {
         console.error("Error fetching data from API", error);
       } finally {
@@ -28,6 +33,10 @@ const ShowBloodLists = () => {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (!Array.isArray(bloodInfos)) {
+    return <div>Error: Blood info is not available in the correct format.</div>;
   }
 
   return (
@@ -44,7 +53,11 @@ const ShowBloodLists = () => {
           _id,
           hospitalAddress,
           hospitalName,
+          currentLocation,
         } = singleBloodDetails;
+
+        // Extract latitude and longitude from currentLocation
+        const { latitude, longitude } = currentLocation || {};
 
         return (
           <Link key={_id} href={`/blood/${_id}`}>
@@ -55,6 +68,9 @@ const ShowBloodLists = () => {
               userNumber={number}
               hospitalName={hospitalName}
               hospitalLocation={hospitalAddress}
+              mapTrack={currentLocation}
+              latitude={latitude} // Pass latitude to BloodCard
+              longitude={longitude} // Pass longitude to BloodCard
             />
           </Link>
         );

@@ -7,6 +7,7 @@ const BloodCard = ({
   userNeedBloodType,
   hospitalName,
   hospitalLocation,
+  mapTrack = {}, // Default to an empty object if not provided
 }) => {
   const [copySuccess, setCopySuccess] = useState("");
 
@@ -29,6 +30,15 @@ const BloodCard = ({
         <p>
           Blood Group is: <b>{userNeedBloodType}</b>
         </p>
+        <div>
+          {mapTrack.latitude && mapTrack.longitude ? (
+            <p>
+              Map: Latitude {mapTrack.latitude}, Longitude {mapTrack.longitude}
+            </p>
+          ) : (
+            <p>Location data not available</p>
+          )}
+        </div>
       </div>
       <div>
         <p>

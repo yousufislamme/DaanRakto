@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import axios from "axios";
 import { useState } from "react";
+import { FaMapMarkerAlt } from "react-icons/fa";
 import { toast } from "sonner";
 
 const BloodRequest = () => {
@@ -24,7 +25,16 @@ const BloodRequest = () => {
     bloodType: "",
     hospitalName: "",
     hospitalAddress: "",
+    currentLocation: {
+      latitude: "",
+      longitude: "",
+    },
   });
+  const [location, setLocation] = useState({
+    latitude: null,
+    longitude: null,
+  });
+  const [error, setError] = useState(null);
 
   // Handle input field changes
   const handleDataCollect = (e) => {
@@ -42,9 +52,45 @@ const BloodRequest = () => {
     });
   };
 
+  // Fetch user's current location (latitude & longitude)
+  const fetchLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setLocation({
+            latitude,
+            longitude,
+          });
+          // Set currentLocation in postReq
+          setPostReq((prevState) => ({
+            ...prevState,
+            currentLocation: {
+              latitude,
+              longitude,
+            },
+          }));
+          setError(null);
+          toast("Location fetched successfully!");
+        },
+        (error) => {
+          setError(error.message);
+        },
+      );
+    } else {
+      setError("Geolocation is not available in your browser.");
+    }
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!location.latitude || !location.longitude) {
+      toast("Please fetch your location before submitting.");
+      return;
+    }
+
     try {
       const response = await axios.post(myServerUrl, postReq);
       if (response.data.acknowledged) {
@@ -128,6 +174,22 @@ const BloodRequest = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="mt-5">
+          <Button size="lg" onClick={fetchLocation} type="button">
+            Add your current location <FaMapMarkerAlt className="text-lg" />
+          </Button>
+          {error ? (
+            <p>Error: {error}</p>
+          ) : location.latitude && location.longitude ? (
+            <>
+              <p>Latitude: {location.latitude}</p>
+              <p>Longitude: {location.longitude}</p>
+            </>
+          ) : (
+            <p>Click the button to get your location.</p>
+          )}
         </div>
 
         <Button className="mt-2" size="sm" type="submit">
