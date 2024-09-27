@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "./Button";
 import DotAnimation from "./DotAnimation";
-import { myServerUrl } from "./bloodTypes";
+import { myServerApi } from "./bloodTypes";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -16,7 +16,7 @@ export function Hero() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(myServerUrl);
+        const res = await fetch(myServerApi);
         const data = await res.json();
 
         // Count blood types

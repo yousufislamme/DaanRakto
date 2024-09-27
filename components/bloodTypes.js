@@ -34,8 +34,6 @@ export const BloodTypesData = [
       type: "O-"
    }
 ];
-export const myServerUrl = "http://localhost:5000/blood_api"
+// export const myServerApi = "http://localhost:5000/users"
 
-// export const myServerUrl = "https://server-api-daanrakto.vercel.app/blood_api"
-
-// export const divisions = "https://bdapis.com/api/v1.0/divisions";
+export const myServerApi = "https://blood-server-eight.vercel.app/users"
