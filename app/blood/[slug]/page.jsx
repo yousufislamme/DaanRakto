@@ -5,10 +5,11 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LuMapPinOff } from "react-icons/lu";
-import { SiGooglemaps } from "react-icons/si";
+
 const PostView = ({ params }) => {
   const [singlePostData, setSinglePostData] = useState(null); // Initialize as null to handle loading state
-  const [YourCurrentLocation, setYourCurrentLocation] = useState();
+  const [yourCurrentLocation, setYourCurrentLocation] = useState("");
+
   useEffect(() => {
     fetch(`${myServerUrl}/${params.slug}`)
       .then((res) => res.json())
@@ -23,7 +24,6 @@ const PostView = ({ params }) => {
     return <Loading />;
   }
 
-  // Safely check for currentLocation and display latitude if it exists
   const {
     name,
     age,
@@ -34,8 +34,13 @@ const PostView = ({ params }) => {
     currentLocation,
   } = singlePostData;
 
+  // Function to handle input change
+  const handleLocationChange = (e) => {
+    setYourCurrentLocation(e.target.value);
+  };
+
   return (
-    <div>
+    <div className="container py-5">
       <h1>PostView</h1>
       <p>Name: {name}</p>
       <p>Age: {age}</p>
@@ -44,17 +49,19 @@ const PostView = ({ params }) => {
       <p>Hospital Name: {hospitalName}</p>
       <p>Hospital Address: {hospitalAddress}</p>
       <p>Apni ekhon kothay theke jete can?</p>
+
       <Input
-        onChange={() => setYourCurrentLocation(YourCurrentLocation)}
+        value={yourCurrentLocation}
+        onChange={handleLocationChange}
+        className="max-w-[300px]"
         type="text"
-        placeholder="Your location"
+        placeholder="Your current location"
       />
+
       {currentLocation ? (
         <div className="flex gap-5">
-          <p>Current Location:</p> Latitude {currentLocation.latitude},
-          Longitude {currentLocation.longitude} <SiGooglemaps />
           <Link
-            href={`https://www.google.com/maps/dir/?api=1&origin=${YourCurrentLocation}&destination=${currentLocation.latitude},${currentLocation.longitude}&travelmode=driving`}
+            href={`https://www.google.com/maps/dir/${yourCurrentLocation}/${currentLocation.latitude},${currentLocation.longitude}`}
             target="_blank"
           >
             Go to track Map
