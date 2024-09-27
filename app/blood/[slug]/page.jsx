@@ -1,13 +1,14 @@
 "use client";
 import { myServerUrl } from "@/components/bloodTypes";
 import Loading from "@/components/Loading";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LuMapPinOff } from "react-icons/lu";
 import { SiGooglemaps } from "react-icons/si";
 const PostView = ({ params }) => {
   const [singlePostData, setSinglePostData] = useState(null); // Initialize as null to handle loading state
-
+  const [YourCurrentLocation, setYourCurrentLocation] = useState();
   useEffect(() => {
     fetch(`${myServerUrl}/${params.slug}`)
       .then((res) => res.json())
@@ -42,13 +43,23 @@ const PostView = ({ params }) => {
       <p>Blood Type: {BloodType}</p>
       <p>Hospital Name: {hospitalName}</p>
       <p>Hospital Address: {hospitalAddress}</p>
+      <p>Apni ekhon kothay theke jete can?</p>
+      <Input
+        onChange={() => setYourCurrentLocation(YourCurrentLocation)}
+        type="text"
+        placeholder="Your location"
+      />
       {currentLocation ? (
-        <Button icon size="lg">
-          {/* <Link href="/https://www.google.com/maps/dir/23.6753874,90.4731487">
-          </Link> */}
-          Current Location: Latitude {currentLocation.latitude}, Longitude
-          {currentLocation.longitude} <SiGooglemaps />
-        </Button>
+        <div className="flex gap-5">
+          <p>Current Location:</p> Latitude {currentLocation.latitude},
+          Longitude {currentLocation.longitude} <SiGooglemaps />
+          <Link
+            href={`https://www.google.com/maps/dir/?api=1&origin=${YourCurrentLocation}&destination=${currentLocation.latitude},${currentLocation.longitude}&travelmode=driving`}
+            target="_blank"
+          >
+            Go to track Map
+          </Link>
+        </div>
       ) : (
         <p>
           Current Location: Not available <LuMapPinOff />

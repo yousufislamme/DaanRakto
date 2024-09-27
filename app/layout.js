@@ -25,7 +25,9 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
+            <div className="mb-16">
+              <Header />
+            </div>
             <div className="min-h-[300px]">
               {children}
               <Toaster />
