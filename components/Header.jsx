@@ -1,5 +1,8 @@
 "use client";
 import LogoAnimation from "@/app/logo/page";
+import { Button } from "@/components/ui/button";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +13,7 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
+  const { setTheme, resolvedTheme } = useTheme();
 
   const handleScroll = () => {
     if (window.scrollY > lastScrollY) {
@@ -40,6 +44,10 @@ const Header = () => {
     };
   }, [handleScroll]);
 
+  const handleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
+
   return (
     <header
       className={`fixed top-0 z-50 w-full border-b-2 bg-white/50 px-1 backdrop-blur-2xl transition-transform duration-300 md:px-5 lg:px-20 ${
@@ -58,13 +66,11 @@ const Header = () => {
           </div>
         </Link>
         <ul className="hidden space-x-3 md:flex">
-          <li className="">
+          <li className="flex">
             <Link
               rel="noopener noreferrer"
               href={"/"}
-              className={`flex items-center px-4 ${
-                pathname === "/" ? "text-red-600" : ""
-              }`}
+              className={`flex items-center px-4 ${pathname === "/blood-request" ? "text-red-600" : ""}`}
             >
               Home
             </Link>
@@ -73,9 +79,7 @@ const Header = () => {
             <Link
               rel="noopener noreferrer"
               href={"/blood-request"}
-              className={`flex items-center px-4 ${
-                pathname === "/blood-request" ? "text-red-600" : ""
-              }`}
+              className={`flex items-center px-4 ${pathname === "/blood-request" ? "text-red-600" : ""}`}
             >
               Blood Request
             </Link>
@@ -84,9 +88,7 @@ const Header = () => {
             <Link
               rel="noopener noreferrer"
               href={"/blog"}
-              className={`flex items-center px-4 ${
-                pathname === "/blog" ? "text-red-600" : ""
-              }`}
+              className={`flex items-center px-4 ${pathname === "/blog" ? "text-red-600" : ""}`}
             >
               Blog
             </Link>
@@ -95,24 +97,19 @@ const Header = () => {
             <Link
               rel="noopener noreferrer"
               href={"/police"}
-              className={`flex items-center px-4 ${
-                pathname === "/police" ? "text-red-600" : ""
-              }`}
+              className={`flex items-center px-4 ${pathname === "/police" ? "text-red-600" : ""}`}
             >
               Police
             </Link>
           </li>
-          {/* <li className="flex">
-            <Link
-              rel="noopener noreferrer"
-              href={"/dashboard"}
-              className={`flex items-center px-4 ${
-                pathname === "/dashboard" ? "text-red-600" : ""
-              }`}
-            >
-              Dashboard
-            </Link>
-          </li> */}
+          <Button variant="outline" size="icon" onClick={handleTheme}>
+            {resolvedTheme === "dark" ? (
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+            ) : (
+              <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+            )}
+            <span className="sr-only">Toggle theme</span>
+          </Button>
         </ul>
         <button
           className="flex justify-end p-4 md:hidden"
@@ -145,60 +142,10 @@ const Header = () => {
               <Link
                 rel="noopener noreferrer"
                 href={"/"}
-                className={`block px-4 py-2 ${
-                  pathname === "/" ? "text-red-600" : ""
-                }`}
+                className={`block px-4 py-2 ${pathname === "/" ? "text-red-600" : ""}`}
                 onClick={() => setIsDropdownVisible(false)}
               >
                 Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                rel="noopener noreferrer"
-                href={"/about"}
-                className={`block px-4 py-2 ${
-                  pathname === "/about" ? "text-red-600" : ""
-                }`}
-                onClick={() => setIsDropdownVisible(false)}
-              >
-                About
-              </Link>
-            </li>
-            <li>
-              <Link
-                rel="noopener noreferrer"
-                href={"/rooms"}
-                className={`block px-4 py-2 ${
-                  pathname === "/rooms" ? "text-red-600" : ""
-                }`}
-                onClick={() => setIsDropdownVisible(false)}
-              >
-                Room
-              </Link>
-            </li>
-            <li>
-              <Link
-                rel="noopener noreferrer"
-                href={"/login"}
-                className={`block px-4 py-2 ${
-                  pathname === "/login" ? "text-red-600" : ""
-                }`}
-                onClick={() => setIsDropdownVisible(false)}
-              >
-                Login
-              </Link>
-            </li>
-            <li>
-              <Link
-                rel="noopener noreferrer"
-                href={"/dashboard"}
-                className={`block px-4 py-2 ${
-                  pathname === "/dashboard" ? "text-red-600" : ""
-                }`}
-                onClick={() => setIsDropdownVisible(false)}
-              >
-                Dashboard
               </Link>
             </li>
           </ul>

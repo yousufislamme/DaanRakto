@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 import { Rubik } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import BloodShowCase from "./BloodShowCase/BloodShowCase";
 import Button from "./Button";
 import DotAnimation from "./DotAnimation";
+import { myServerUrl } from "./bloodTypes";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -16,7 +16,7 @@ export function Hero() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("https://daan-rakto-server.vercel.app/donate");
+        const res = await fetch(myServerUrl);
         const data = await res.json();
 
         // Count blood types
@@ -63,11 +63,6 @@ export function Hero() {
           buttonTitle="Blood Need"
         />
       </div>
-
-      {/* BloodShowCase Component */}
-      {Object.keys(bloodTypeCounts).length > 0 && (
-        <BloodShowCase bloodTypeCounts={bloodTypeCounts} />
-      )}
     </div>
   );
 }
