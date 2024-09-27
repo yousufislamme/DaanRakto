@@ -1,4 +1,5 @@
 "use client";
+import LogoAnimation from "@/app/logo/page";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -41,7 +42,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full border-b-2 bg-black/50 px-1 backdrop-blur-2xl transition-transform duration-300 md:px-5 lg:px-20 ${
+      className={`fixed top-0 z-50 w-full border-b-2 bg-white/50 px-1 backdrop-blur-2xl transition-transform duration-300 md:px-5 lg:px-20 ${
         !isVisible ? "-translate-y-full" : "translate-y-0"
       }`}
     >
@@ -52,7 +53,9 @@ const Header = () => {
           aria-label="Back to homepage"
           className="flex items-center p-2 text-2xl font-semibold"
         >
-          DaanRakto
+          <div className="mt-6">
+            <LogoAnimation />
+          </div>
         </Link>
         <ul className="hidden space-x-3 md:flex">
           <li className="">
