@@ -1,6 +1,7 @@
 "use client";
 import { myServerUrl } from "@/components/bloodTypes";
 import Loading from "@/components/Loading";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -60,12 +61,14 @@ const PostView = ({ params }) => {
 
       {currentLocation ? (
         <div className="flex gap-5">
-          <Link
-            href={`https://www.google.com/maps/dir/${yourCurrentLocation}/${currentLocation.latitude},${currentLocation.longitude}`}
-            target="_blank"
-          >
-            Go to track Map
-          </Link>
+          <Button size="lg" className="mt-2">
+            <Link
+              href={`https://www.google.com/maps/dir/${yourCurrentLocation}/${currentLocation.latitude},${currentLocation.longitude}`}
+              target="_blank"
+            >
+              Go to track Map
+            </Link>
+          </Button>
         </div>
       ) : (
         <p>
