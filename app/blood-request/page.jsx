@@ -1,5 +1,5 @@
 "use client";
-import { BloodTypesData, myServerUrl } from "@/components/bloodTypes";
+import { BloodTypesData, myServerApi } from "@/components/bloodTypes";
 import DotAnimation from "@/components/DotAnimation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,7 +92,7 @@ const BloodRequest = () => {
     }
 
     try {
-      const response = await axios.post(myServerUrl, postReq);
+      const response = await axios.post(myServerApi, postReq);
       if (response.data.acknowledged) {
         toast("Request submitted successfully!");
       } else {

@@ -1,5 +1,5 @@
 "use client";
-import { myServerUrl } from "@/components/bloodTypes";
+import { myServerApi } from "@/components/bloodTypes";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -20,7 +20,7 @@ const NewPost = () => {
 
     try {
       // Sending POST request with the input data
-      const res = await axios.post(myServerUrl, {
+      const res = await axios.post(myServerApi, {
         data: inputData,
       });
       console.log("Response:", res.data); // Handle success

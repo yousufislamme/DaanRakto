@@ -1,5 +1,5 @@
 "use client";
-import { myServerUrl } from "@/components/bloodTypes";
+import { myServerApi } from "@/components/bloodTypes";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,7 +12,7 @@ const PostView = ({ params }) => {
   const [yourCurrentLocation, setYourCurrentLocation] = useState("");
 
   useEffect(() => {
-    fetch(`${myServerUrl}/${params.slug}`)
+    fetch(`${myServerApi}/${params.slug}`)
       .then((res) => res.json())
       .then((data) => {
         setSinglePostData(data);

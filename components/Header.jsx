@@ -25,7 +25,7 @@ const Header = () => {
   };
 
   const handleDropdownToggle = () => {
-    setIsDropdownVisible((prev) => !prev);
+    setIsDropdownVisible((prev) => !prev); // Toggle the mobile menu
   };
 
   const handleClickOutside = (e) => {
@@ -65,55 +65,62 @@ const Header = () => {
             <LogoAnimation />
           </div>
         </Link>
-        <ul className="hidden space-x-3 md:flex">
-          <li className="flex">
+
+        {/* Desktop Menu */}
+        <ul className="hidden items-center space-x-3 md:flex">
+          <li>
             <Link
               rel="noopener noreferrer"
               href={"/"}
-              className={`flex items-center px-4 ${pathname === "/blood-request" ? "text-red-600" : ""}`}
+              className={`px-4 ${pathname === "/" ? "text-red-600" : ""}`}
             >
               Home
             </Link>
           </li>
-          <li className="flex">
+          <li>
             <Link
               rel="noopener noreferrer"
               href={"/blood-request"}
-              className={`flex items-center px-4 ${pathname === "/blood-request" ? "text-red-600" : ""}`}
+              className={`px-4 ${
+                pathname === "/blood-request" ? "text-red-600" : ""
+              }`}
             >
               Blood Request
             </Link>
           </li>
-          <li className="flex">
+          <li>
             <Link
               rel="noopener noreferrer"
               href={"/blog"}
-              className={`flex items-center px-4 ${pathname === "/blog" ? "text-red-600" : ""}`}
+              className={`px-4 ${pathname === "/blog" ? "text-red-600" : ""}`}
             >
               Blog
             </Link>
           </li>
-          <li className="flex">
+          <li>
             <Link
               rel="noopener noreferrer"
-              href={"/police"}
-              className={`flex items-center px-4 ${pathname === "/police" ? "text-red-600" : ""}`}
+              href={"/policy"}
+              className={`px-4 ${pathname === "/police" ? "text-red-600" : ""}`}
             >
-              Police
+              Policy
             </Link>
           </li>
           <Button variant="outline" size="icon" onClick={handleTheme}>
             {resolvedTheme === "dark" ? (
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+              <Sun className="h-[1.2rem] w-[1.2rem]" />
             ) : (
-              <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+              <Moon className="h-[1.2rem] w-[1.2rem]" />
             )}
             <span className="sr-only">Toggle theme</span>
           </Button>
         </ul>
+
+        {/* Mobile Hamburger Menu */}
         <button
-          className="flex justify-end p-4 md:hidden"
+          className="p-4 md:hidden"
           onClick={handleDropdownToggle}
+          aria-label="Toggle mobile menu"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -131,23 +138,69 @@ const Header = () => {
           </svg>
         </button>
       </div>
-      {/* Mobile Menu */}
+
+      {/* Mobile Dropdown Menu */}
       {isDropdownVisible && (
         <div
           ref={dropdownRef}
-          className="absolute left-0 top-16 w-full border-t bg-white/60 text-slate-900 backdrop-blur-xl md:hidden"
+          className="absolute left-0 top-16 w-full bg-white/60 backdrop-blur-2xl md:hidden"
         >
           <ul className="flex flex-col space-y-2 p-4 font-semibold">
             <li>
               <Link
                 rel="noopener noreferrer"
                 href={"/"}
-                className={`block px-4 py-2 ${pathname === "/" ? "text-red-600" : ""}`}
+                className={`block px-4 py-2 ${
+                  pathname === "/" ? "text-red-600" : ""
+                }`}
                 onClick={() => setIsDropdownVisible(false)}
               >
                 Home
               </Link>
             </li>
+            <li>
+              <Link
+                rel="noopener noreferrer"
+                href={"/blood-request"}
+                className={`block px-4 py-2 ${
+                  pathname === "/blood-request" ? "text-red-600" : ""
+                }`}
+                onClick={() => setIsDropdownVisible(false)}
+              >
+                Blood Request
+              </Link>
+            </li>
+            <li>
+              <Link
+                rel="noopener noreferrer"
+                href={"/blog"}
+                className={`block px-4 py-2 ${
+                  pathname === "/blog" ? "text-red-600" : ""
+                }`}
+                onClick={() => setIsDropdownVisible(false)}
+              >
+                Blog
+              </Link>
+            </li>
+            <li>
+              <Link
+                rel="noopener noreferrer"
+                href={"/police"}
+                className={`block px-4 py-2 ${
+                  pathname === "/police" ? "text-red-600" : ""
+                }`}
+                onClick={() => setIsDropdownVisible(false)}
+              >
+                Police
+              </Link>
+            </li>
+            <Button variant="outline" size="icon" onClick={handleTheme}>
+              {resolvedTheme === "dark" ? (
+                <Sun className="h-[1.2rem] w-[1.2rem]" />
+              ) : (
+                <Moon className="h-[1.2rem] w-[1.2rem]" />
+              )}
+            </Button>
           </ul>
         </div>
       )}

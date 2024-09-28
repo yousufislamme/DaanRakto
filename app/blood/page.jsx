@@ -1,7 +1,7 @@
 "use client";
 
 import BloodCard from "@/components/BloodCard";
-import { myServerUrl } from "@/components/bloodTypes";
+import { myServerApi } from "@/components/bloodTypes";
 import Loading from "@/components/Loading";
 import Link from "next/link"; // Import Link from Next.js
 import { useEffect, useState } from "react";
@@ -13,7 +13,7 @@ const ShowBloodLists = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(myServerUrl);
+        const res = await fetch(myServerApi);
         const data = await res.json();
         console.log("API response:", data); // Log API response
         if (Array.isArray(data)) {
