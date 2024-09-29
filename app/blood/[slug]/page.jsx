@@ -1,5 +1,5 @@
 "use client";
-import { myServerApi } from "@/components/bloodTypes";
+import { myServerApi } from "@/components/api/app";
 import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

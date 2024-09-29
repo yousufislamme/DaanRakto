@@ -1,7 +1,7 @@
 "use client";
 
+import { myServerApi } from "@/components/api/app";
 import BloodCard from "@/components/BloodCard";
-import { myServerApi } from "@/components/bloodTypes";
 import Loading from "@/components/Loading";
 import Link from "next/link"; // Import Link from Next.js
 import { useEffect, useState } from "react";
