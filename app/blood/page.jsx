@@ -9,6 +9,11 @@ import { useEffect, useState } from "react";
 const ShowBloodLists = () => {
   const [bloodInfos, setBloodInfos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchBloodGroup = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +22,7 @@ const ShowBloodLists = () => {
         const data = await res.json();
         console.log("API response:", data); // Log API response
         if (Array.isArray(data)) {
-          setBloodInfos(data); // Only set if it's an array
+          setBloodInfos(data); // Set the bloodInfos only if it's an array
         } else {
           console.error("Unexpected API response format:", data);
         }
@@ -39,42 +44,64 @@ const ShowBloodLists = () => {
     return <div>Error: Blood info is not available in the correct format.</div>;
   }
 
+  // Filtered blood information based on search input
+  const filteredBloodInfos = bloodInfos.filter((item) => {
+    const searchString = searchValue.toLowerCase();
+    const nameMatch = item.name?.toLowerCase().includes(searchString);
+    const bloodTypeMatch = item.bloodType?.toLowerCase().includes(searchString);
+
+    return searchString === "" || nameMatch || bloodTypeMatch;
+  });
+
   return (
     <div className="px-10">
       <div className="mt-20">
         <h1 className="titleStyle">Blood list</h1>
       </div>
-      {bloodInfos.map((singleBloodDetails) => {
-        const {
-          name,
-          bloodType,
-          number,
-          age,
-          _id,
-          hospitalAddress,
-          hospitalName,
-          currentLocation,
-        } = singleBloodDetails;
 
-        // Extract latitude and longitude from currentLocation
-        const { latitude, longitude } = currentLocation || {};
+      {/* Search bar */}
+      <input
+        type="text"
+        placeholder="Search by name or blood group"
+        className="m-5 rounded-full border-2 border-orange-500 px-5 py-3 outline-none"
+        onChange={handleSearchBloodGroup}
+      />
 
-        return (
-          <Link key={_id} href={`/blood/${_id}`}>
-            <BloodCard
-              key={_id}
-              userName={name}
-              userNeedBloodType={bloodType}
-              userNumber={number}
-              hospitalName={hospitalName}
-              hospitalLocation={hospitalAddress}
-              mapTrack={currentLocation}
-              latitude={latitude} // Pass latitude to BloodCard
-              longitude={longitude} // Pass longitude to BloodCard
-            />
-          </Link>
-        );
-      })}
+      {filteredBloodInfos.length === 0 ? (
+        <p>No matching results found</p>
+      ) : (
+        filteredBloodInfos.map((singleBloodDetails) => {
+          const {
+            name,
+            bloodType,
+            number,
+            age,
+            _id,
+            hospitalAddress,
+            hospitalName,
+            currentLocation,
+          } = singleBloodDetails;
+
+          // Extract latitude and longitude from currentLocation
+          const { latitude, longitude } = currentLocation || {};
+
+          return (
+            <Link key={_id} href={`/blood/${_id}`}>
+              <BloodCard
+                key={_id}
+                userName={name}
+                userNeedBloodType={bloodType}
+                userNumber={number}
+                hospitalName={hospitalName}
+                hospitalLocation={hospitalAddress}
+                mapTrack={currentLocation}
+                latitude={latitude} // Pass latitude to BloodCard
+                longitude={longitude} // Pass longitude to BloodCard
+              />
+            </Link>
+          );
+        })
+      )}
     </div>
   );
 };
