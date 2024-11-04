@@ -36,7 +36,7 @@ const Blog = () => {
       </div>
       <div className="mt-10 grid grid-cols-3 gap-5">
         {blogs.map((blog) => (
-          <div className="bg-red-600" key={blog.id}>
+          <div className="rounded-lg bg-blue-400 px-5 py-2" key={blog.id}>
             {blog.title}
           </div>
         ))}
